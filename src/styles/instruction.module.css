@@ -1,0 +1,117 @@
+.background {
+  background: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: scroll;
+  background-position: 68%;
+}
+
+.topNav {
+  width: 100%;
+  padding: 0 3%;
+  height: 55px;
+  box-shadow: 5px 5px 5px #0005;
+  background-color: rgb(255, 166, 1);
+}
+
+.ant .links li:hover {
+  color: black;
+  transition: 0.4s;
+}
+
+.title {
+  font-size: 27px;
+  position: relative;
+  top: 7px;
+  color: black;
+}
+
+.card {
+  margin: 70px auto;
+  background: rgb(255, 166, 1);
+  border: rgb(255, 166, 1);
+  left: 10px;
+}
+.title {
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-weight: 500;
+}
+.imageContainer img {
+  position: relative;
+  height: 180px;
+  width: 180px;
+  border-radius: 90px;
+  border: 4px solid white;
+  left: 36%;
+  margin-left: -29px;
+  top: -40px;
+}
+
+.ingredients {
+  margin-bottom: 40px;
+  font-size: 15px;
+}
+.details {
+  border: 1px;
+  box-sizing: content-box;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  width: 108%;
+  position: relative;
+  right: 24px;
+  background: radial-gradient(rgb(231, 142, 202) 15%, rgba(0, 0, 0, 0) 16%),
+    radial-gradient(#6cf 15%, rgba(0, 0, 0, 0) 16%), rgb(114, 106, 76);
+  background-position: 0 -20px, 30px 17px;
+  font-size: 16px;
+  background-size: 60px 60px;
+}
+.details h3 {
+  color: rgb(255, 166, 1);
+  font-weight: 700;
+}
+.checkedItem {
+  text-decoration: line-through;
+}
+.button {
+  border: 0;
+  padding: 8px;
+  background-color: rgb(59, 130, 246);
+  border-radius: 7px;
+  transition: 0.3s;
+}
+.button:hover {
+  background-color: rgb(40, 108, 218);
+  transition: 0.3s;
+}
+.link {
+  color: white;
+}
+.link:hover {
+  color: white;
+}
+.input {
+  width: 30%;
+  margin-left: 66vw;
+  padding-bottom: 60px;
+  margin-top: 48px;
+}
+
+@media only screen and (max-width: 481px) {
+  .card {
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 678px) {
+  .ant-input-wrapper.ant-input-group {
+    width: 40%;
+  }
+}
+@media only screen and (max-width: 440px) {
+  .ant-input-wrapper.ant-input-group {
+    width: 50%;
+  }
+}

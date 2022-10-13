@@ -1,0 +1,35 @@
+.topNav {
+  width: 100%;
+  padding: 0 3%;
+  height: 55px;
+
+  box-shadow: 5px 5px 5px #0005;
+  background-color: rgb(255, 166, 1);
+}
+
+.ant-input-wrapper {
+  bottom: 79px;
+  float: right;
+}
+.ant .links li:hover {
+  color: black;
+  transition: 0.4s;
+}
+
+.title {
+  font-size: 27px;
+  position: relative;
+  top: 7px;
+  color: black;
+}
+
+@media only screen and (max-width: 678px) {
+  .ant-input-wrapper.ant-input-group {
+    width: 40%;
+  }
+}
+@media only screen and (max-width: 440px) {
+  .ant-input-wrapper.ant-input-group {
+    width: 50%;
+  }
+}

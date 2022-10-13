@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.site-layout-content {
+  height: 100vh;
+  background: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 68%;
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif;
+  /* position: absolute;
+
+  bottom: 40vh;
+  color: orange; */
+}
+
+.ant-btn.ant-btn-primary {
+  background-color: #1890ff;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 600px;
+}
+
+.column1 h1 {
+  margin: 8% 0 0 18%;
+  margin-bottom: 40px;
+}
+.column1 h3,
+h1 {
+  white-space: nowrap;
+}
+
+.column2 {
+  width: 450px;
+  margin-top: 7%;
+}
+.sub-title,
+.ant-input-wrapper.ant-input-group {
+  font-size: 30px;
+  margin-left: 18%;
+  color: rgb(255, 255, 255);
+}
+
+.slick-dots-bottom {
+  visibility: hidden;
+}
+.ant-input-wrapper.ant-input-group {
+  width: 30vw;
+}
+@media only screen and (min-width: 1016px) {
+  .column2 {
+    margin-right: 100px;
+    margin-top: 13%;
+  }
+}
+@media only screen and (max-width: 1016px) {
+  .column1 {
+    position: relative;
+    right: 80px;
+    white-space: nowrap;
+  }
+  .column1 h1 {
+    position: relative;
+    left: 18px;
+  }
+
+  .box {
+    flex-direction: column;
+  }
+
+  .column2 {
+    position: relative;
+    width: 400px;
+  }
+
+  .ant-input-wrapper.ant-input-group {
+    width: 408px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .site-layout-content {
+    overflow-x: hidden;
+  }
+  .column1 h1 {
+    font-size: 40px;
+    left: 93px;
+    position: relative;
+  }
+
+  .column1 h3 {
+    font-size: 25px;
+    position: relative;
+    left: 26px;
+  }
+  .column2 {
+    width: 360px;
+    padding-top: 120px;
+  }
+}
+@media only screen and (max-width: 463px) {
+  .ant-input-wrapper.ant-input-group {
+    width: 360px;
+    left: 20px;
+  }
+  .column1 {
+    top: 40px;
+  }
+
+  .column1 h1 {
+    left: 84px;
+  }
+
+  .banner {
+    padding-top: 67px;
+  }
+  .column2 {
+    bottom: 80px;
+  }
+}
+@media only screen and (max-width: 383px) {
+  .column1 {
+    top: 70px;
+  }
+  .ant-input-wrapper.ant-input-group {
+    width: 300px;
+    left: 20px;
+  }
+  .column1 h1 {
+    font-size: 36px;
+    left: 70px;
+  }
+  .column1 h3 {
+    font-size: 20px;
+    position: relative;
+    left: 33px;
+  }
+  .column2 {
+    width: 300px;
+    left: 1px;
+    top: 51px;
+    position: relative;
+  }
+}
+@media only screen and (min-height: 850px) {
+  .column1 {
+    top: 50px;
+  }
+  .column2 {
+    bottom: 50px;
+  }
+}
