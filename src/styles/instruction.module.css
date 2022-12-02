@@ -4,6 +4,7 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-attachment: fixed;
   background-position: 68%;
 }
 
@@ -22,7 +23,8 @@
   margin: 70px auto;
   background: #d3d3d3;
   border: rgb(255, 166, 1);
-  width: 60vw;
+  min-width: 330px;
+  max-width: 60vw;
   position: relative;
 }
 .cardHeader {
