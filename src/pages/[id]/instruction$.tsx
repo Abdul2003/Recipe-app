@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 import Header from '../components/header$'
 import Footer from '../components/footer'
-import main from '../../styles/instruction.module.css'
+import className from '../../styles/instruction.module.css'
 import background from '../../styles/images/background2.jpg'
 import { TabTitle } from '../../../TitleName.js'
 import axios from 'axios'
@@ -86,7 +86,7 @@ function RecipePage() {
     setChecked(updatedList)
   }
   var isChecked = (item) =>
-    check.includes(item) ? main.checkedItem : main.not_checked_item
+    check.includes(item) ? className.checkedItem : className.not_checked_item
 
   const minToHours = Number(time)
   const router = useHistory()
@@ -100,23 +100,27 @@ function RecipePage() {
   }
   return (
     <Layout
-      className={main.background}
+      className={className.background}
       style={{ backgroundImage: `url(${background})` }}
     >
       <Header input={onSearch} />
 
-      <Card className={main.card}>
-        <div className={main.cardHeader}>
-          <div className={main.imageContainer}>
-            <img className={main.image} alt={`${label}`} src={`${image}`} />
+      <Card className={className.card}>
+        <div className={className.cardHeader}>
+          <div className={className.imageContainer}>
+            <img
+              className={className.image}
+              alt={`${label}`}
+              src={`${image}`}
+            />
           </div>
-          <div className={main.holder}>
-            <div className={main.title}>
+          <div className={className.holder}>
+            <div className={className.title}>
               <p>{label}</p>
             </div>
-            <div className={main.information}>
+            <div className={className.information}>
               {minToHours > 60 ? (
-                <div className={main.information_text}>
+                <div className={className.information_text}>
                   Preparation Time:
                   <p>
                     {' '}
@@ -125,12 +129,12 @@ function RecipePage() {
                   </p>
                 </div>
               ) : (
-                <div className={main.information_text}>
+                <div className={className.information_text}>
                   Preparation Time:
                   <p>{minToHours} Minutes</p>
                 </div>
               )}
-              <div className={main.information_text}>
+              <div className={className.information_text}>
                 Servings:
                 <p>
                   <input
@@ -141,7 +145,7 @@ function RecipePage() {
                   />
                 </p>
               </div>
-              <div className={main.information_text}>
+              <div className={className.information_text}>
                 Calories/Serving:
                 <p>
                   {TextChange == '0' || TextChange == ''
@@ -153,8 +157,8 @@ function RecipePage() {
           </div>
         </div>
 
-        <div className={main.content}>
-          <div className={main.ingredients}>
+        <div className={className.content}>
+          <div className={className.ingredients}>
             <h3 className="text-lg font-semibold">Ingredients</h3>
             <Meta
               description={result.map((item, index) => (
@@ -168,7 +172,7 @@ function RecipePage() {
 
             <div className="mt-3">
               <a className="text-white" href={`${link}`} target="_blank">
-                <button className={main.button}>Instructions </button>
+                <button className={className.button}>Instructions </button>
                 <span className="ml-1 text-black">On </span>
                 <span className="ml-1 text-black hover:text-slate-200 underline trains">
                   {' '}
@@ -177,13 +181,13 @@ function RecipePage() {
               </a>
             </div>
           </div>
-          <div className={main.nutrition}>
+          <div className={className.nutrition}>
             <h3 className="text-lg font-semibold border-b-2 border-black">
               Nutrition
             </h3>
             <div>
               <h3 className="text-sm font-semibold">Dietary Labels:</h3>
-              <ul className={`${main.healthLabels}`}>
+              <ul className={`${className.healthLabels}`}>
                 {dietaryLabels.map((item) => (
                   <li className="inline-block font-semibold">&nbsp;{item}</li>
                 ))}
