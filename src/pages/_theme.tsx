@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Theme } from 'vite-plugin-react-pages'
 import { useStaticData } from 'vite-plugin-react-pages/client'
+import Error from './components/error'
 
 const theme: Theme = ({ loadedData, loadState }) => {
   const staticData = useStaticData()
@@ -9,8 +10,9 @@ const theme: Theme = ({ loadedData, loadState }) => {
   // You can generate side nav menu from staticData
   // const sideMenuData = useMemo(() => generateSideMenu(staticData), [staticData])
 
-  if (loadState.type === '404') return <p>Page not found.</p>
-  if (loadState.type === 'load-error') return <p>Load error!</p>
+  if (loadState.type === '404')
+    return <Error error={`Error ${loadState.type}`} />
+  if (loadState.type === 'load-error') return <Error error={'Load Error'} />
   if (loadState.type === 'loading') return <p></p>
 
   // loadState.type === 'loaded'

@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Layout, Card, Checkbox, Input } from 'antd'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
 import Header from '../components/header$'
 import Footer from '../components/footer'
 import main from '../../styles/instruction.module.css'
 import background from '../../styles/images/background2.jpg'
+import { TabTitle } from '../../../TitleName.js'
+import axios from 'axios'
+import Loading from '../components/loading'
+import ErrorPage from '../components/error'
 import '../../index.css'
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 
 const { Search } = Input
 const { Meta } = Card
 
-function instruction() {
+function RecipePage() {
   const { id } = useParams<{ id: string }>()
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState(null)
@@ -22,35 +26,50 @@ function instruction() {
   const [image, setImage] = useState([])
   const [time, setTime] = useState([])
   const [link, setLink] = useState([])
-  const [serving, setServing] = useState([])
+  const [source, setSource] = useState([])
   const [check, setChecked] = useState([])
+  const [calories, setCalories] = useState([])
+  const [TextChange, setTextChange] = useState('1')
+  const [nutrients, setNutrients] = useState([])
+  const [dietaryLabels, setDietaryLabels] = useState([])
+  const [title, setTitle] = useState('🍽️ Recipe Hub')
 
   useEffect(() => {
-    fetch(
-      `https://api.edamam.com/api/recipes/v2/${id}?type=public&beta=false&app_id=32d889fc&app_key=48835bf785e2402c93e208cb5df68988&instructions=true`
-    )
-      .then((response) => response.json())
+    axios
+      .get(
+        `https://api.edamam.com/api/recipes/v2/${id}?type=public&beta=false&app_id=32d889fc&app_key=48835bf785e2402c93e208cb5df68988&instructions=true`
+      )
       .then(
-        (data) => {
+        (response) => {
           setIsLoaded(true)
-          setResult(data.recipe.ingredients)
-          setTime(data.recipe.totalTime)
-          setServing(data.recipe.yield)
-          setLabel(data.recipe.label)
-          setImage(data.recipe.image)
-          setLink(data.recipe.url)
+          setResult(response.data.recipe.ingredients)
+          setTime(response.data.recipe.totalTime)
+          setLabel(response.data.recipe.label)
+          setImage(response.data.recipe.image)
+          setLink(response.data.recipe.url)
+          setSource(response.data.recipe.source)
+          setDietaryLabels(response.data.recipe.healthLabels)
+          setCalories(response.data.recipe.calories)
+          setNutrients(response.data.recipe.digest)
+          setTitle(`🍽️ ${label}`)
         },
         (error) => {
           setIsLoaded(true)
           setError(error)
         }
       )
-  }, [])
-
+  }, [title])
+  console.log(window.innerWidth)
   if (error) {
-    return <div>Error: {error.message}</div>
+    TabTitle(`🍽️ Recipe Hub`)
+    return <ErrorPage error={error.message} />
   } else if (!isLoaded) {
-    return <h1>Loading...</h1>
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    )
   }
   console.log(time)
   console.log(result)
@@ -67,79 +86,126 @@ function instruction() {
     setChecked(updatedList)
   }
   var isChecked = (item) =>
-    check.includes(item) ? main.checkedItem : 'not-checked-item'
+    check.includes(item) ? main.checkedItem : main.not_checked_item
 
-  const data = Number(time)
-
+  const minToHours = Number(time)
   const router = useHistory()
   const onSearch = (value) =>
-    router.push({ search: `q=${value}`, pathname: `/:id` })
+    router.push({ search: `q=${value}`, pathname: `/:id/results` })
+
+  TabTitle(title)
+
+  const handleTextChange = (e) => {
+    setTextChange(e.target.value)
+  }
   return (
     <Layout
       className={main.background}
       style={{ backgroundImage: `url(${background})` }}
     >
-      <div className="topNav">
-        <Link
-          className="title"
-          to=""
-          onClick={() => {
-            window.location.href = '/'
-          }}
-        >
-          Recipe Hub
-        </Link>
+      <Header input={onSearch} />
 
-        <Search
-          className={main.input}
-          placeholder="Search Recipe"
-          onSearch={onSearch}
-          enterButton
-        />
-      </div>
-      <Card
-        className={main.card}
-        style={{ width: 400 }}
-        cover={
+      <Card className={main.card}>
+        <div className={main.cardHeader}>
           <div className={main.imageContainer}>
-            <img className={main.image} alt="example" src={`${image}`} />
+            <img className={main.image} alt={`${label}`} src={`${image}`} />
           </div>
-        }
-      >
-        <div className={main.details}>
-          {data > 60 ? (
-            <h3>
-              Time: {Math.floor(data / 60)} Hours, {data % 60} Minutes
-            </h3>
-          ) : (
-            <h3>Time: {data} Minutes</h3>
-          )}
-          <h3>Yield: {serving}</h3>
+          <div className={main.holder}>
+            <div className={main.title}>
+              <p>{label}</p>
+            </div>
+            <div className={main.information}>
+              {minToHours > 60 ? (
+                <div className={main.information_text}>
+                  Preparation Time:
+                  <p>
+                    {' '}
+                    {Math.floor(minToHours / 60)} Hour(s), {minToHours % 60}{' '}
+                    Minutes
+                  </p>
+                </div>
+              ) : (
+                <div className={main.information_text}>
+                  Preparation Time:
+                  <p>{minToHours} Minutes</p>
+                </div>
+              )}
+              <div className={main.information_text}>
+                Servings:
+                <p>
+                  <input
+                    className="w-7 bg-white shadow-md rounded outline-none text-center"
+                    onChange={handleTextChange}
+                    value={TextChange}
+                    maxLength={2}
+                  />
+                </p>
+              </div>
+              <div className={main.information_text}>
+                Calories/Serving:
+                <p>
+                  {TextChange == '0' || TextChange == ''
+                    ? Math.floor(Number(calories) / 1)
+                    : Math.floor(Number(calories) / Number(TextChange))}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className={main.title}>{label}</p>
-        <Meta
-          description={result.map((item, index) => (
-            <li>
-              <Checkbox
-                key={index}
-                className={main.ingredients}
-                onChange={onChange}
-                value={item.text}
-              >
-                <p className={isChecked(item.text)}>{item.text}</p>
-              </Checkbox>
-            </li>
-          ))}
-        ></Meta>
-        <button className={main.button}>
-          <a className={main.link} href={`${link}`} target="_blank">
-            Instructions
-          </a>
-        </button>
+
+        <div className={main.content}>
+          <div className={main.ingredients}>
+            <h3 className="text-lg font-semibold">Ingredients</h3>
+            <Meta
+              description={result.map((item, index) => (
+                <li>
+                  <Checkbox key={index} onChange={onChange} value={item.text}>
+                    <p className={isChecked(item.text)}>{item.text}</p>
+                  </Checkbox>
+                </li>
+              ))}
+            ></Meta>
+
+            <div className="mt-3">
+              <a className="text-white" href={`${link}`} target="_blank">
+                <button className={main.button}>Instructions </button>
+                <span className="ml-1 text-black">On </span>
+                <span className="ml-1 text-black hover:text-slate-200 underline trains">
+                  {' '}
+                  {source}{' '}
+                </span>
+              </a>
+            </div>
+          </div>
+          <div className={main.nutrition}>
+            <h3 className="text-lg font-semibold border-b-2 border-black">
+              Nutrition
+            </h3>
+            <div>
+              <h3 className="text-sm font-semibold">Dietary Labels:</h3>
+              <ul className={`${main.healthLabels}`}>
+                {dietaryLabels.map((item) => (
+                  <li className="inline-block font-semibold">&nbsp;{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold">Nutrients:</h3>
+              {nutrients.map((item) => (
+                <>
+                  <p className="text-base">
+                    {item.label}: {Math.floor(Number(item.daily))}
+                    {item.unit}
+                  </p>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
       </Card>
       <Footer />
     </Layout>
   )
 }
 
-export default instruction
+export default RecipePage

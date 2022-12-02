@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.section {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Roboto', sans-serif;
+}
+.image {
+  width: 600px;
+}
+
+.ant-btn-lg.button {
+  background-color: #1890ff;
+}
+.ant-btn-lg.button:hover {
+  background-color: #1677ff;
+}
+.ant-btn-lg.button a:hover {
+  color: white;
+}
+@media only screen and (max-width: 640px) {
+  .image {
+    min-width: 300px;
+  }
+}

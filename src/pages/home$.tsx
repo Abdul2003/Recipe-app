@@ -1,20 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Input, Card, Space } from 'antd'
 import { useHistory } from 'react-router-dom'
 import '../styles/home.css'
 import 'antd/dist/antd.css'
 import '../index.css'
 
-import viteConfig from 'vite.config'
 const { Search } = Input
-
 const { Meta } = Card
 
-function landing() {
+function Landing() {
   const router = useHistory()
-
   const onSearch = (value) =>
     router.push({ search: `q=${value}`, pathname: `/:id` })
+
   return (
     <>
       <div className={'background'}></div>
@@ -25,4 +23,4 @@ function landing() {
     </>
   )
 }
-export default landing
+export default Landing

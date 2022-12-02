@@ -1,27 +1,26 @@
-import { Layout, Input, Carousel } from 'antd'
 import React from 'react'
+import { Layout, Input, Carousel } from 'antd'
+import { useHistory } from 'react-router-dom'
 import '../styles/landing.css'
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 import image from '../styles/images/background2.jpg'
 import Fade from 'react-reveal/Fade'
 import Flip from 'react-reveal/Flip'
-import '../index.css'
-import { useHistory } from 'react-router-dom'
-import foodOne from '../styles/images/food1.jpg'
-import foodTwo from '../styles/images/Omelet-PNG-HD.jpg'
-import foodThree from '../styles/images/Cooking-Recipe-PNG-Clipart.jpg'
-import foodFour from '../styles/images/Cooking-Recipe-PNG-File.jpg'
-import foodFive from '../styles/images/Juice-PNG-Pic.jpg'
+import foodImgOne from '../styles/images/Omelet-PNG-HD.jpg'
+import foodImgTwo from '../styles/images/Cooking-Recipe-PNG-Clipart.jpg'
+import foodImgThree from '../styles/images/Cooking-Recipe-PNG-File.jpg'
+import foodImgFour from '../styles/images/Juice-PNG-Pic.jpg'
 import Footer from './components/footer'
+import '../index.css'
 
 const { Content } = Layout
 const { Search } = Input
 
-function App() {
+function landingPage() {
   const router = useHistory()
 
   const onSearch = (value) =>
-    router.push({ search: `q=${value}`, pathname: `/:id` })
+    router.push({ search: `q=${value}`, pathname: `/:id/results` })
 
   return (
     <>
@@ -53,10 +52,10 @@ function App() {
 
               <div className="column2">
                 <Carousel autoplay={true}>
-                  <img className="banner" src={foodTwo} alt="Image 5" />
-                  <img className="banner" src={foodThree} alt="Image 3" />
-                  <img className="banner" src={foodFour} alt="Image 4" />
-                  <img className="banner" src={foodFive} alt="Image 2" />
+                  <img className="banner" src={foodImgOne} alt="Image 1" />
+                  <img className="banner" src={foodImgTwo} alt="Image 2" />
+                  <img className="banner" src={foodImgThree} alt="Image 3" />
+                  <img className="banner" src={foodImgFour} alt="Image 4" />
                 </Carousel>
               </div>
             </div>{' '}
@@ -68,4 +67,4 @@ function App() {
   )
 }
 
-export default App
+export default landingPage

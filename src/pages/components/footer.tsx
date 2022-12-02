@@ -4,7 +4,15 @@ const { Footer } = Layout
 function Foot() {
   return (
     <Layout>
-      <Footer style={{ textAlign: 'center' }}>Designed By Abdul</Footer>
+      <Footer
+        style={{
+          textAlign: 'center',
+          fontSize: '20px',
+          backgroundColor: '#f59e0b',
+        }}
+      >
+        Designed By Abdul
+      </Footer>
     </Layout>
   )
 }

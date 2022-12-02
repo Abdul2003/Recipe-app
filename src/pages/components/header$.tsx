@@ -12,7 +12,7 @@ function HomeLayout(props) {
   return (
     <div className="topNav">
       <Link
-        className="title"
+        className="topNav-title"
         to=""
         onClick={() => {
           window.location.href = '/'
@@ -21,7 +21,7 @@ function HomeLayout(props) {
         Recipe Hub
       </Link>
 
-      <Search bar={props.input} />
+      <Search search={props.input} />
     </div>
   )
 }

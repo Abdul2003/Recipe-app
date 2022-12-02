@@ -4,77 +4,75 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-attachment: scroll;
+
   background-position: 68%;
 }
 
-.topNav {
-  width: 100%;
-  padding: 0 3%;
-  height: 55px;
-  box-shadow: 5px 5px 5px #0005;
-  background-color: rgb(255, 166, 1);
-}
-
-.ant .links li:hover {
-  color: black;
-  transition: 0.4s;
-}
-
 .title {
-  font-size: 27px;
-  position: relative;
-  top: 7px;
   color: black;
+  font-size: clamp(21px, 25px, 29px);
+  font-weight: 500;
+  max-width: 400px;
+}
+.information_text {
+  white-space: nowrap;
+  font-weight: 500;
 }
 
 .card {
   margin: 70px auto;
-  background: rgb(255, 166, 1);
+  background: #d3d3d3;
   border: rgb(255, 166, 1);
-  left: 10px;
-}
-.title {
-  margin-bottom: 40px;
-  font-size: 25px;
-  font-weight: 500;
-}
-.imageContainer img {
+  width: 60vw;
   position: relative;
-  height: 180px;
-  width: 180px;
-  border-radius: 90px;
-  border: 4px solid white;
-  left: 36%;
-  margin-left: -29px;
-  top: -40px;
+}
+.cardHeader {
+  background-color: #ebebeb;
+  box-shadow: 5px 5px #cccccc;
 }
 
+.imageContainer {
+  max-width: 250px; /*using "max" makes the image so small it eventually dissapears, but information wont overflow from card  */
+  min-width: 200px;
+  margin: 10px;
+}
+
+.information {
+  font-size: clamp(12px, 16px, 20px);
+}
+.healthLabels {
+  border-top: 1px solid black;
+  text-align: center;
+  max-width: 300px;
+  border-bottom: 1px solid black;
+  /* Non standard for webkit */
+  word-wrap: break-word;
+}
+.healthLabels li::after {
+  content: ', ';
+}
+.healthLabels li:last-child::after {
+  content: '';
+}
+.ul li {
+  position: absolute;
+  right: 0;
+}
 .ingredients {
   margin-bottom: 40px;
-  font-size: 15px;
+  font-size: clamp(11px, 15px, 19px);
 }
-.details {
-  border: 1px;
-  box-sizing: content-box;
-  padding: 10px;
-  display: flex;
-  justify-content: space-around;
-  width: 108%;
-  position: relative;
-  right: 24px;
-  background: radial-gradient(rgb(231, 142, 202) 15%, rgba(0, 0, 0, 0) 16%),
-    radial-gradient(#6cf 15%, rgba(0, 0, 0, 0) 16%), rgb(114, 106, 76);
-  background-position: 0 -20px, 30px 17px;
-  font-size: 16px;
-  background-size: 60px 60px;
+.ingredients h3 {
+  border-bottom: 2px solid black;
 }
-.details h3 {
-  color: rgb(255, 166, 1);
-  font-weight: 700;
+
+.nutrition,
+.not_checked_item {
+  font-size: clamp(12px, 16px, 20px);
 }
 .checkedItem {
   text-decoration: line-through;
+  font-size: clamp(12px, 16px, 20px);
 }
 .button {
   border: 0;
@@ -87,31 +85,94 @@
   background-color: rgb(40, 108, 218);
   transition: 0.3s;
 }
-.link {
-  color: white;
-}
-.link:hover {
-  color: white;
-}
-.input {
-  width: 30%;
-  margin-left: 66vw;
+
+.search {
+  width: 28.2%;
+  margin-left: 68.2vw;
   padding-bottom: 60px;
-  margin-top: 48px;
+  position: relative;
+  top: 37.5px;
+
+  min-height: 1px;
+  height: 20px;
 }
 
-@media only screen and (max-width: 481px) {
-  .card {
-    width: 400px;
+.input {
+  width: 5%;
+  padding: 7px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: 6px;
+  text-align: center;
+  text-decoration: none;
+}
+@media only screen and (max-width: 1152px) {
+  .information_text {
+    margin: 7px;
+  }
+  .information {
+    display: block;
+  }
+  .imageContainer img {
+    position: relative;
+    top: 23px;
+    min-width: 100px;
+  }
+  .information_text {
+    margin-left: 10px;
+  }
+  .title {
+    margin-left: 17px;
   }
 }
-@media only screen and (max-width: 678px) {
-  .ant-input-wrapper.ant-input-group {
-    width: 40%;
+@media only screen and (min-width: 1153px) {
+  .information p {
+    text-align: center;
+  }
+  .information {
+    display: flex;
+  }
+  .title {
+    text-align: center;
   }
 }
-@media only screen and (max-width: 440px) {
-  .ant-input-wrapper.ant-input-group {
-    width: 50%;
+
+@media only screen and (max-width: 832px) {
+  .imageContainer {
+    margin: auto;
+  }
+  .imageContainer img {
+    position: relative;
+    height: 180px;
+    width: 180px;
+    border-radius: 90px;
+    border: 4px solid white;
+    top: -40px;
+    margin: auto;
+  }
+  .information {
+    margin-left: 8px;
+  }
+}
+@media only screen and (min-width: 832px) {
+  .cardHeader {
+    display: flex;
+  }
+  .holder {
+    margin: 20px auto;
+  }
+  .content {
+    margin-top: 40px;
+    gap: 100px;
+    display: flex;
+  }
+  .information_text {
+    margin: 20px;
+  }
+
+  .ingredients,
+  .nutrition {
+    width: 43%;
   }
 }
