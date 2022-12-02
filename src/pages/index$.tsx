@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom'
 import '../styles/landing.css'
 import 'antd/dist/reset.css'
 import image from '../styles/images/background2.jpg'
-import Fade from 'react-reveal/Fade'
-import Flip from 'react-reveal/Flip'
+// import Fade from 'react-reveal/Fade'
+// import Flip from 'react-reveal/Flip'
 import foodImgOne from '../styles/images/Omelet-PNG-HD.jpg'
 import foodImgTwo from '../styles/images/Cooking-Recipe-PNG-Clipart.jpg'
 import foodImgThree from '../styles/images/Cooking-Recipe-PNG-File.jpg'
@@ -35,14 +35,14 @@ function landingPage() {
             {' '}
             <div className="box">
               <div className="column1">
-                <Fade top>
-                  <h1 className="text-6xl font-bold text-amber-500 title ">
-                    Recipe Hub
-                  </h1>
-                </Fade>
-                <Flip duration={3000} bottom>
-                  <h3 className="sub-title">Your One Stop Site For Recipes</h3>
-                </Flip>
+                {/* <Fade top> */}
+                <h1 className="text-6xl font-bold text-amber-500 title ">
+                  Recipe Hub
+                </h1>
+                {/* </Fade>
+                <Flip duration={3000} bottom> */}
+                <h3 className="sub-title">Your One Stop Site For Recipes</h3>
+                {/* </Flip> */}
                 <Search
                   placeholder="Search Recipe"
                   onSearch={onSearch}
