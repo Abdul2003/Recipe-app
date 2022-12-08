@@ -34,15 +34,6 @@
   height: 600px;
 }
 
-.column1 h1 {
-  margin: 8% 0 0 18%;
-  margin-bottom: 40px;
-}
-.column1 h3,
-h1 {
-  white-space: nowrap;
-}
-
 .column2 {
   width: 450px;
   margin-top: 7%;
@@ -65,18 +56,32 @@ h1 {
     margin-right: 100px;
     margin-top: 13%;
   }
-}
-@media only screen and (max-width: 1016px) {
-  .column1 {
-    position: relative;
-    right: 80px;
+  .column1 h1 {
+    margin: 8% 0 0 18%;
+    margin-bottom: 40px;
+  }
+  .column1 h3,
+  h1 {
     white-space: nowrap;
   }
-  .column1 h1 {
-    position: relative;
-    left: 18px;
+}
+@media only screen and (max-width: 1016px) {
+  .column1 > * {
+    margin: 20px auto;
+    white-space: nowrap;
   }
-
+  .column2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .column2,
+  .column1 {
+    min-height: 100px;
+  }
+  .column1 h1,
+  .sub_title {
+    text-align: center;
+  }
   .box {
     flex-direction: column;
   }
@@ -84,6 +89,11 @@ h1 {
   .column2 {
     position: relative;
     width: 400px;
+    margin: 0;
+
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
 
   .input_search {
@@ -96,62 +106,48 @@ h1 {
   }
   .column1 h1 {
     font-size: 40px;
-    left: 93px;
-    position: relative;
   }
 
   .column1 h3 {
     font-size: 25px;
-    position: relative;
-    left: 26px;
   }
   .column2 {
     width: 360px;
-    padding-top: 120px;
   }
 }
 @media only screen and (max-width: 463px) {
   .input_search {
     width: 360px;
-    left: 20px;
-    position: relative;
   }
   .column1 {
-    top: 40px;
   }
 
   .column1 h1 {
-    left: 84px;
   }
 
   .banner {
     padding-top: 67px;
   }
   .column2 {
-    padding-top: 50px;
+    position: relative;
   }
 }
 @media only screen and (max-width: 383px) {
   .column1 {
-    top: 70px;
   }
   .input_search {
     width: 300px;
-    left: 20px;
   }
   .column1 h1 {
     font-size: 36px;
-    left: 70px;
   }
   .column1 h3 {
     font-size: 20px;
-    position: relative;
-    left: 33px;
   }
   .column2 {
     width: 300px;
     left: 1px;
-    top: 51px;
+
     position: relative;
   }
 }
@@ -160,6 +156,5 @@ h1 {
     top: 50px;
   }
   .column2 {
-    bottom: 50px;
   }
 }
