@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+
 .site_layout_content {
-  height: 100vh;
   background: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -13,14 +8,11 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: 68%;
+  min-height: 100vh;
 }
 
 .column1 h1 {
   font-family: 'Montserrat', sans-serif;
-  /* position: absolute;
-
-  bottom: 40vh;
-  color: orange; */
 }
 
 .input_search button {
@@ -35,7 +27,7 @@
 }
 
 .column2 {
-  width: 450px;
+  width: 380px;
   margin-top: 7%;
 }
 .sub_title,
@@ -70,14 +62,7 @@
     margin: 20px auto;
     white-space: nowrap;
   }
-  .column2 {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .column2,
-  .column1 {
-    min-height: 100px;
-  }
+
   .column1 h1,
   .sub_title {
     text-align: center;
@@ -85,12 +70,14 @@
   .box {
     flex-direction: column;
   }
+  .column1 {
+    margin-top: 40px;
+  }
 
   .column2 {
     position: relative;
-    width: 400px;
+    width: 370px;
     margin: 0;
-
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
@@ -142,10 +129,5 @@
     left: 1px;
 
     position: relative;
-  }
-}
-@media only screen and (min-height: 850px) {
-  .column1 {
-    top: 50px;
   }
 }

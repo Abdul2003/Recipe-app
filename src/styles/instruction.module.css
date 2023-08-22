@@ -5,7 +5,6 @@
   -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
-  background-position: 68%;
 }
 
 .title {
@@ -81,9 +80,11 @@
   background-color: rgb(59, 130, 246);
   border-radius: 7px;
   transition: 0.3s;
+  color: white;
 }
 .button:hover {
   background-color: rgb(40, 108, 218);
+  color: white;
   transition: 0.3s;
 }
 

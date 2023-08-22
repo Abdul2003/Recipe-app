@@ -14,9 +14,16 @@ function loadError(props) {
       <h1 className="md:text-2xl flex justify-center text-xl xl:text-3xl">
         {props.error}
       </h1>
-      <h3 className="text-base flex justify-center md:text-lg">
-        Try Refreshing or
-      </h3>
+      {props.error == 'Error 404' ? (
+        <h3 className="text-base flex justify-center md:text-lg">
+          Page Not Found
+        </h3>
+      ) : (
+        <h3 className="text-base flex justify-center md:text-lg">
+          Try Refreshing or
+        </h3>
+      )}
+
       <div className="flex justify-center">
         {window.innerWidth <= 766 ? (
           <Button className="button" size="middle" type="primary" shape="round">

@@ -3,14 +3,15 @@ import { useParams } from 'react-router-dom'
 import { Layout, Card, Checkbox, Input } from 'antd'
 import { useHistory } from 'react-router-dom'
 import type { CheckboxChangeEvent } from 'antd/es/checkbox'
-import Header from '../components/header$'
+import Header from '../components/header'
 import Footer from '../components/footer'
 import className from '../../styles/instruction.module.css'
-import background from '../../styles/images/background2.jpg'
+import background from '.././resturant.jpg'
 import { TabTitle } from '../../../TitleName.js'
 import axios from 'axios'
 import Loading from '../components/loading'
 import ErrorPage from '../components/error'
+import Favourite from '../components/addRecipe'
 import '../../index.css'
 import 'antd/dist/reset.css'
 
@@ -116,7 +117,9 @@ function RecipePage() {
           </div>
           <div className={className.holder}>
             <div className={className.title}>
-              <p>{label}</p>
+              {/* <p>
+                {label} <Favourite recipe={label} />
+              </p> */}
             </div>
             <div className={className.information}>
               {minToHours > 60 ? (
@@ -174,9 +177,8 @@ function RecipePage() {
               <a className="text-white" href={`${link}`} target="_blank">
                 <button className={className.button}>Instructions </button>
                 <span className="ml-1 text-black">On </span>
-                <span className="ml-1 text-black hover:text-slate-200 underline trains">
-                  {' '}
-                  {source}{' '}
+                <span className="ml-1 text-black hover:text-blue-600 underline">
+                  {source}
                 </span>
               </a>
             </div>

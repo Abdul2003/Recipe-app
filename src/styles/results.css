@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-.body {
-  margin: 0px;
-}
 
 .background {
   background: no-repeat;
@@ -46,4 +43,11 @@ button.ant-btn.ant-btn-primary.ant-input-search-button:hover {
 }
 .ant-card-meta-title {
   white-space: none;
+}
+.anticon.anticon-star {
+  color: rgb(255, 174, 0);
+  font-size: 20px;
+  position: absolute;
+  left: 0;
+  bottom: 20px;
 }

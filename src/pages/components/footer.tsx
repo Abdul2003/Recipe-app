@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Layout } from 'antd'
 const { Footer } = Layout
-function Foot() {
+function Foot(id) {
   return (
     <Layout>
       <Footer
@@ -11,7 +11,8 @@ function Foot() {
           backgroundColor: '#f59e0b',
         }}
       >
-        Designed By Abdul
+        {/* Designed By Abdul */}
+        NICE DISHES
       </Footer>
     </Layout>
   )

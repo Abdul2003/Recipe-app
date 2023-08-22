@@ -1,0 +1,10 @@
+.avatar {
+  height: 70px;
+  width: 70px;
+}
+
+span.anticon.anticon-delete {
+  color: rgb(219, 69, 69);
+  font-size: 20px;
+  cursor: pointer;
+}

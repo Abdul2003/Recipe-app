@@ -1,0 +1,13 @@
+const colRef = collection(db, 'Recipes')
+  let recipes = []
+  getDocs(colRef)
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        recipes.push(doc.data())
+        // console.log(recipes.map((item) => item.recipe))
+      })
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+  console.log(recipes)

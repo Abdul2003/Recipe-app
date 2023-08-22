@@ -10,14 +10,13 @@
 .image {
   width: 600px;
 }
-
-.ant-btn-lg.button {
+.ant-btn-primary.button {
   background-color: #1890ff;
 }
-.ant-btn-lg.button:hover {
+.ant-btn-primary.button:hover {
   background-color: #1677ff;
 }
-.ant-btn-lg.button a:hover {
+.ant-btn-primary.button a:hover {
   color: white;
 }
 @media only screen and (max-width: 640px) {
