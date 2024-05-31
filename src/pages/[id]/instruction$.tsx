@@ -140,7 +140,7 @@ function RecipePage() {
       <Card className={className.card}>
         <div className={className.cardHeader}>
           <Row>
-            <Col xs={24} sm={10} md={8}>
+            <Col className="flex items-center" xs={24} sm={10} md={9}>
               {' '}
               <div className={className.imageContainer}>
                 <img
@@ -150,7 +150,7 @@ function RecipePage() {
                 />
               </div>
             </Col>
-            <Col xs={24} sm={13} md={16}>
+            <Col xs={24} sm={13} md={14}>
               <div className={className.holder}>
                 <div className={className.title}>
                   <p>{label}</p>{' '}

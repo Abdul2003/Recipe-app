@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { StarFilled, StarOutlined } from '@ant-design/icons'
 import { arrayUnion } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
@@ -19,6 +19,7 @@ function addRecipe(props) {
   const auth = firebase.auth()
   const db = firebase.firestore()
   const [user] = useAuthState(auth as any)
+  const [messageApi, contextHolder] = message.useMessage()
 
   console.log(user)
   // useEffect(() => {
@@ -58,6 +59,7 @@ function addRecipe(props) {
       setdisLiked(<StarFilled />)
       setCheckFav(true)
       setCheckFav2(true)
+      messageApi.info('Recipe Added To Favourites!❤️')
     })
     console.log('added')
     console.log(props.firestoreRecipe)
@@ -77,7 +79,7 @@ function addRecipe(props) {
     setLiked(<StarOutlined />)
     setCheckFav(false)
     setCheckFav2(false)
-    console.log('removed')
+    messageApi.info('Recipe Removed From Favourites!💔')
   }
 
   function dislikeRecipe(e) {
@@ -97,13 +99,18 @@ function addRecipe(props) {
   console.log(checkFav)
 
   return props.firestoreRecipe.includes(props.recipe) ? (
-    <Button onClick={likeRecipe} type="link">
-      {disLiked}
-    </Button>
+    <>
+      {contextHolder}
+      <Button onClick={likeRecipe} type="link">
+        {disLiked}
+      </Button>
+    </>
   ) : (
-    <Button onClick={dislikeRecipe} type="link">
-      {Liked}
-    </Button>
+    <>
+      <Button onClick={dislikeRecipe} type="link">
+        {Liked}
+      </Button>
+    </>
   )
 }
 

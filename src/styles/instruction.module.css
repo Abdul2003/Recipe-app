@@ -30,17 +30,26 @@
 .cardHeader {
   background-color: #ebebeb;
   box-shadow: 5px 5px #cccccc;
+  padding: 10px;
 }
 
 .imageContainer {
   width: 230px; /*using "max" makes the image so small it eventually dissapears, but information wont overflow from card  */
-
-  margin: 10px;
+  align-items: center;
+}
+.imageContainer img {
+  width: 100%;
+}
+:global(.anticon.anticon-star) {
+  color: rgb(255, 174, 0);
+  font-size: 23px;
+  position: absolute;
+  left: 0;
+  bottom: 10px;
 }
 
 .information {
   font-size: 16px;
-  margin-top: 50px;
 }
 .healthLabels {
   border-top: 1px solid black;
@@ -70,9 +79,6 @@
   font-weight: 600;
   border-bottom: 2px solid black;
 }
-.instructions {
-}
-
 .nutrition,
 .not_checked_item {
   font-size: clamp(12px, 16px, 20px);
@@ -116,13 +122,6 @@
   text-align: center;
   text-decoration: none;
 }
-.favouriteBtn {
-  color: rgb(255, 174, 0);
-  font-size: 20px;
-  position: absolute;
-  left: 0;
-  bottom: 20px;
-}
 @media only screen and (max-width: 960px) {
   .card {
     width: 90vw;
@@ -138,9 +137,10 @@
     margin-right: 10px;
   }
 
-  .imageContainer img {
+  .imageContainer {
     width: 150px;
   }
+
   .information_text {
     padding: 0;
   }
@@ -151,6 +151,8 @@
   the display becoming column */
   .imageContainer {
     margin: auto;
+    display: flex;
+    justify-content: center;
   }
   .imageContainer img {
     position: relative;
@@ -159,7 +161,6 @@
     border-radius: 90px;
     border: 4px solid white;
     top: -40px;
-    margin: auto;
   }
   .information,
   .title {
@@ -200,10 +201,5 @@
   .imageContainer img {
     height: 140px;
     width: 140px;
-  }
-}
-@media only screen and (max-width: 275px) {
-  .imageContainer img {
-    margin: auto 30px;
   }
 }
