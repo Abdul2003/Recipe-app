@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
-
 .topNav {
   width: 100%;
   padding: 12px 40px;
@@ -17,8 +16,7 @@ button.ant-btn.ant-btn-primary.ant-input-search-button:hover {
   color: white;
 }
 .input {
-  float: right;
-  max-width: 400px;
+  width: 100%;
 }
 .topNav-title {
   font-family: 'Nunito', sans-serif;
@@ -26,7 +24,20 @@ button.ant-btn.ant-btn-primary.ant-input-search-button:hover {
   color: black;
   white-space: nowrap;
 }
-
+.menu {
+  justify-content: flex-end;
+  align-items: center;
+  height: 30px;
+  background-color: inherit;
+  border: none;
+}
+.ant-menu-submenu::after {
+  display: none;
+}
+.ant-menu-submenu-popup {
+  background-color: transparent;
+}
+/* 
 @media only screen and (max-width: 1180px) {
   .input {
     max-width: 300px;
@@ -62,5 +73,28 @@ button.ant-btn.ant-btn-primary.ant-input-search-button:hover {
 @media only screen and (max-width: 354px) {
   .input {
     max-width: 120px;
+  }
+} */
+@media only screen and (max-width: 576px) {
+  .topNav-title {
+    font-size: 23px;
+    line-height: 30px;
+  }
+  .topNav {
+    padding: 12px 0px;
+  }
+  .ant-input::placeholder {
+    font-size: 12px;
+  }
+  .topNav-title {
+    margin-left: 10px;
+  }
+  .user {
+    margin-right: 10px;
+  }
+}
+@media only screen and (max-width: 385px) {
+  .ant-btn-primary {
+    padding: 9px;
   }
 }

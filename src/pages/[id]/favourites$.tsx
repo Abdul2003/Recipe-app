@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, List, Avatar } from 'antd'
 import { DeleteOutlined, DeleteFilled } from '@ant-design/icons'
+import { useHistory } from 'react-router-dom'
+import { TabTitle } from '../../../TitleName.js'
 import '../../styles/favourites.css'
 import { doc, getDoc } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
@@ -10,7 +12,7 @@ import 'firebase/compat/firestore'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Header from '../components/header'
-import DeleteRecipe from '../components/deleteRecipe'
+import DeleteRecipe from '../components/removeFavourite.js'
 
 function favourites() {
   firebase.initializeApp({
@@ -34,7 +36,7 @@ function favourites() {
   useEffect(() => {
     const fetchData = async () => {
       onAuthStateChanged(auth, (user) => {
-        const colRef = doc(db, 'Users', user.uid)
+        const colRef = doc(db, 'Users', user.email)
         getDoc(colRef).then((doc) => {
           setFavouriteRecipes(doc.data().Favourites)
           console.log(favouriteRecipes)
@@ -51,26 +53,30 @@ function favourites() {
 
   console.log([...favouriteRecipes])
   console.log([favouriteRecipes])
+  const router = useHistory()
+  const onSearch = (value) =>
+    router.push({ search: `q=${value}`, pathname: `/:id/results` })
+  TabTitle('🍽️ Favourites')
 
   return (
     <>
-      <Header />{' '}
+      <Header input={onSearch} />{' '}
       <div>
         <List
           size="small"
           bordered
           style={{ alignContent: 'center' }}
           dataSource={favouriteRecipes}
-          renderItem={(item, idx) => (
+          renderItem={(item, index) => (
             <>
-              {console.log(idx)}
-              <Link target="_blank" to={`/${item.id}/instruction`}>
+              {console.log(index)}
+              <Link target="_blank" to={`/${item.Id}/instruction`}>
                 <List.Item className="hover:bg-slate-100">
                   <List.Item.Meta
                     avatar={
                       <Avatar
                         className="avatar"
-                        src={`${item.image}`}
+                        src={`${item.Image}`}
                         alt="Food image"
                       />
                     }
@@ -83,7 +89,7 @@ function favourites() {
                   className="absolute right-0 mr-3 sm:mr-20"
                   onClick={() => {
                     onAuthStateChanged(fireAuth, (user) => {
-                      const userRef = db.collection('Users').doc(user.uid)
+                      const userRef = db.collection('Users').doc(user.email)
                       userRef.update({
                         Favourites: firebase.firestore.FieldValue.arrayRemove({
                           Recipe: item.Recipe,
@@ -98,10 +104,10 @@ function favourites() {
                   <DeleteRecipe
                     favouriteRecipes={favouriteRecipes}
                     setFavouriteRecipes={setFavouriteRecipes}
-                    index={idx}
+                    index={index}
                     recipe={item.Recipe}
-                    id={item.id}
-                    image={item.image}
+                    id={item.Id}
+                    image={item.Image}
                   />
                   {/* </div> */}
                 </List.Item>

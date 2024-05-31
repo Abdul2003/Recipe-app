@@ -5,6 +5,7 @@ import { arrayUnion } from 'firebase/firestore'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
+import '../../styles/header.css'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import initializeFirebase from '../../../firebaseinit'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -32,14 +33,16 @@ function addRecipe(props) {
   const addFavourite = () => {
     onAuthStateChanged(auth, () => {
       userRef.get().then((docSnapshot) => {
-        console.log(docSnapshot)
+        if (props.firestoreRecipe.includes(props.recipe)) {
+          console.log('null')
+          alert('null')
+        }
         if (docSnapshot.exists) {
           userRef.update({
             Favourites: arrayUnion({
               Recipe: props.recipe,
               Id: props.id,
-              //LINK OF IMAGE CHANGES SO DELETING FROM FAVOURITES WONT WORK
-              //Image: props.image,
+              Image: props.image,
             }),
           })
         } else {
@@ -47,8 +50,7 @@ function addRecipe(props) {
             Favourites: arrayUnion({
               Recipe: props.recipe,
               Id: props.id,
-              //LINK OF IMAGE CHANGES SO DELETING FROM FAVOURITES WONT WORK
-              //Image: props.image,
+              Image: props.image,
             }),
           })
         }
@@ -60,16 +62,13 @@ function addRecipe(props) {
       setCheckFav2(true)
     })
     console.log('added')
-    console.log(props.firestoreRecipe)
-    console.log(props.recipe)
   }
   const RemoveFavourite = () => {
     userRef.update({
       Favourites: firebase.firestore.FieldValue.arrayRemove({
         Recipe: props.recipe,
         Id: props.id,
-        //LINK OF IMAGE CHANGES SO DELETING FROM FAVOURITES WONT WORK
-        //Image: props.image,
+        Image: props.image,
       }),
     })
 
@@ -80,16 +79,14 @@ function addRecipe(props) {
     console.log('removed')
   }
 
-  function dislikeRecipe(e) {
+  function toggleFunction() {
     checkFav == false ? addFavourite() : RemoveFavourite()
     console.log(checkFav)
-    e.preventDefault()
   }
 
-  function likeRecipe(e) {
+  function al() {
     checkFav2 == false ? addFavourite() : RemoveFavourite()
     console.log(checkFav)
-    e.preventDefault()
   }
 
   console.log(props.firestoreRecipe)
@@ -97,11 +94,11 @@ function addRecipe(props) {
   console.log(checkFav)
 
   return props.firestoreRecipe.includes(props.recipe) ? (
-    <Button onClick={likeRecipe} type="link">
+    <Button onClick={al} type="link">
       {disLiked}
     </Button>
   ) : (
-    <Button onClick={dislikeRecipe} type="link">
+    <Button onClick={toggleFunction} type="link">
       {Liked}
     </Button>
   )

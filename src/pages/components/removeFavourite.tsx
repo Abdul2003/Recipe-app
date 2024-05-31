@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-function deleteRecipe(props) {
+function removeFavourite(props) {
   firebase.initializeApp({
     apiKey: 'AIzaSyAv5whcY5qA60ZWgj4qNJwzA7ozjVL4S60',
     authDomain: 'recipe-hub-45704.firebaseapp.com',
@@ -21,12 +21,12 @@ function deleteRecipe(props) {
 
   const removeRecipe = (idx, e) => {
     onAuthStateChanged(fireAuth, (user) => {
-      const userRef = db.collection('Users').doc(user.uid)
+      const userRef = db.collection('Users').doc(user.email)
       userRef.update({
         Favourites: firebase.firestore.FieldValue.arrayRemove({
           Recipe: props.recipe,
-          id: props.id,
-          image: props.image,
+          Id: props.id,
+          // Image: props.image,
         }),
       })
     })
@@ -53,4 +53,4 @@ function deleteRecipe(props) {
     </div>
   )
 }
-export default deleteRecipe
+export default removeFavourite

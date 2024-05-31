@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Input, Carousel } from 'antd'
 import { useHistory } from 'react-router-dom'
 import className from '../styles/landing.module.css'
@@ -8,14 +8,22 @@ import foodImgTwo from '../styles/images/Cooking-Recipe-PNG-Clipart.jpg'
 import foodImgThree from '../styles/images/Cooking-Recipe-PNG-File.jpg'
 import foodImgFour from '../styles/images/Juice-PNG-Pic.jpg'
 import Footer from './components/footer'
+import search from './components/search'
 
 const { Search } = Input
 
 function landingPage() {
+  const [placeholder, setPlaceholder] = useState('Search A Recipe')
+  const [status, setStatus] = useState(null)
   const router = useHistory()
-
-  const onSearch = (value) =>
-    router.push({ search: `q=${value}`, pathname: `/:id/results` })
+  const onSearch = (value) => {
+    if (value == '') {
+      setPlaceholder('This Field Should Not Be Empty')
+      setStatus('error')
+    } else {
+      router.push({ search: `q=${value}`, pathname: `/:id/results` })
+    }
+  }
 
   return (
     <>
@@ -33,7 +41,8 @@ function landingPage() {
             </h3>
             <Search
               className={className.input_search}
-              placeholder="Search Recipe"
+              placeholder={placeholder}
+              status={status}
               onSearch={onSearch}
               enterButton
             />

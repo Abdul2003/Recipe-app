@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Card, List, Button } from 'antd'
+import { Card, List, Button, Row, Col, Pagination, Spin } from 'antd'
 import type { MenuProps } from 'antd'
 import { PropertySafetyFilled, StarOutlined } from '@ant-design/icons'
+import { TabTitle } from '../../../TitleName.js'
 import '../../index.css'
 import '../../styles/results.css'
 import 'antd/dist/reset.css'
@@ -19,32 +20,53 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase/compat/app'
 import initializeFirebase from '../../../firebaseinit'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { merge } from 'antd/es/theme/util/statistic.js'
 
 const { Meta } = Card
 
 function resultsPage() {
   firebase.initializeApp(initializeFirebase)
+  const APP_ID = '32d889fc'
+  const APP_KEY = '48835bf785e2402c93e208cb5df68988'
   const auth = firebase.auth()
   const [user] = useAuthState(auth as any)
-  const params = new URLSearchParams(location.search)
+  const params = new URLSearchParams(location.search).get('q')
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
-
+  const [isNextResultLoaded, setIsNextResultLoaded] = useState(null)
   const [results, setResults] = useState([])
   const [FirestoreResult, setFirestoreResult] = useState([])
-  const [search, setSearch] = useState(params.get('q'))
+  const [search, setSearch] = useState()
+  const [cuisineTypeFilter, setCuisineTypeFilter] = useState(null)
+  const [dietFilter, setDietFilter] = useState(null)
+  const [dishTypeFilter, setDishTypeFilter] = useState(null)
+  const [page, setPage] = useState(1)
+  const [recipeData, setRecipeData] = useState([
+    `https://api.edamam.com/api/recipes/v2?type=public&q=${params}&app_id=${APP_ID}&app_key=${APP_KEY}`,
+  ])
+  const [nextPageLink, setNextPageLink] = useState()
+  const [nextPageError, setnextPageError] = useState()
+
+  const [route, setRoute] = useState()
 
   useEffect(() => {
-    const APP_ID = '32d889fc'
-    const APP_KEY = '48835bf785e2402c93e208cb5df68988'
     axios
-      .get(
-        `https://api.edamam.com/search?q=${search}&app_id=${APP_ID}&app_key=${APP_KEY}&from=0&to=6&random=true`
-      )
+      .all(recipeData.map((endpoint) => axios.get(endpoint)))
       .then(
-        (res) => {
-          setResults(res.data.hits)
-          setIsLoaded(true)
+        (response) => {
+          console.log(response)
+          let data = []
+          response.forEach((item) => {
+            data = data.concat(item.data.hits)
+            console.log(data)
+            console.log(item.data.hits)
+            setResults(data)
+            setIsLoaded(true)
+            setIsNextResultLoaded(true)
+            setNextPageLink(item.data._links.next.href)
+
+            console.log(nextPageLink)
+          })
         },
         (error) => {
           setError(error)
@@ -52,15 +74,17 @@ function resultsPage() {
       )
       .catch((error) => {
         console.log(error)
+        //THIS BECOMES UNDEFINED WHEN RECIPE RESULTS LINK HAS REACHED THE END
+        setnextPageError(error)
       })
+
     const fetchData = async () => {
       const db = getFirestore()
       const auth = getAuth()
       onAuthStateChanged(auth, (user) => {
-        const colRef = doc(db, 'Users', user.uid)
+        const colRef = doc(db, 'Users', user.email)
         getDoc(colRef).then((doc) => {
           const getRecipe = doc.data().Favourites
-          console.log(getRecipe)
 
           setFirestoreResult(getRecipe.map((item) => item.Recipe))
 
@@ -68,12 +92,11 @@ function resultsPage() {
         })
       })
     }
-    console.log('effect!!')
     fetchData().catch(console.error)
-  }, [search])
-
-  console.log(results)
-  console.log(search)
+  }, [recipeData])
+  const getTitleValue = (search) => {
+    TabTitle(`🍽️ ${search} Results`)
+  }
 
   if (error) {
     return (
@@ -81,10 +104,17 @@ function resultsPage() {
         <ErrorPage error={error.message} />
       </div>
     )
-  } else if (!isLoaded) {
+  } else if (isLoaded == false) {
     return (
       <>
-        <Topnav input={(search) => setSearch(search)} />
+        <Topnav
+          filterCuisineType={(filter) => setCuisineTypeFilter(filter)}
+          filterDiet={(filter) => setDietFilter(filter)}
+          filterDishType={(filter) => setDishTypeFilter(filter)}
+          input={(search) => setRecipeData(search)}
+          isLoaded={(loadState) => setIsLoaded(loadState)}
+          title={getTitleValue}
+        />
         <Loading />
       </>
     )
@@ -94,24 +124,32 @@ function resultsPage() {
     image: item.recipe.image,
     title: item.recipe.label,
     id: item.recipe.uri.substr(51),
-    time: (
-      <p className="time">
-        {item.recipe.totalTime > '60' ? (
-          <p>
-            {Math.floor(item.recipe.totalTime / 60)} Hours,{' '}
-            {item.recipe.totalTime % 60} Minutes
-          </p>
-        ) : (
-          <p>{item.recipe.totalTime} Minutes</p>
-        )}
-      </p>
-    ),
+    cuisinetype: item.recipe.cuisineType,
+    dietLabels: item.recipe.dietLabels,
+    dishType: item.recipe.dishType,
+    time:
+      item.recipe.totalTime > 60
+        ? Math.floor(item.recipe.totalTime / 60) +
+          ' Hours' +
+          ', ' +
+          (item.recipe.totalTime % 60) +
+          ' ' +
+          'Minutes'
+        : item.recipe.totalTime + ' ' + 'Minutes',
   }))
   console.log(data.map((item) => item.title))
+
   if (results.length === 0) {
     return (
       <>
-        <Topnav input={(search) => setSearch(search)} />
+        <Topnav
+          filterCuisineType={(filter) => setCuisineTypeFilter(filter)}
+          filterDiet={(filter) => setDietFilter(filter)}
+          filterDishType={(filter) => setDishTypeFilter(filter)}
+          input={(search) => setRecipeData(search)}
+          isLoaded={(loadState) => setIsLoaded(loadState)}
+          title={getTitleValue}
+        />
         <div
           className="background"
           style={{
@@ -124,56 +162,122 @@ function resultsPage() {
       </>
     )
   }
-
+  const displayItems = data
+    .filter((cuisine) =>
+      typeof cuisineTypeFilter == 'string'
+        ? cuisine.cuisinetype.includes(cuisineTypeFilter)
+        : cuisine
+    )
+    .filter((diet) =>
+      typeof dietFilter == 'string'
+        ? diet.dietLabels.includes(dietFilter)
+        : diet
+    )
+    .filter((dish) =>
+      typeof dishTypeFilter == 'string'
+        ? dish.dishType.includes(dishTypeFilter)
+        : dish
+    )
   return (
-    <>
-      <Topnav input={(search) => setSearch(search)} />
+    <div>
+      <Topnav
+        filterCuisineType={(filter) => setCuisineTypeFilter(filter)}
+        filterDiet={(filter) => setDietFilter(filter)}
+        filterDishType={(filter) => setDishTypeFilter(filter)}
+        input={(search) => setRecipeData(search)}
+        isLoaded={(loadState) => setIsLoaded(loadState)}
+        title={getTitleValue}
+      />
 
       <div
         className="background"
         style={{
-          backgroundImage: `url(${background})`,
+          backgroundImage: `url({background})`,
         }}
       >
         <List
-          grid={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3, xxl: 3 }}
-          dataSource={data}
+          grid={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 5 }}
+          dataSource={displayItems}
+          // pagination={{
+          //   pageSize: 10,
+          //   current: page,
+          //   onChange: (value) => setPage(value),
+          //   total: displayItems.length,
+          // }}
           renderItem={(item) => (
             <>
-              <Card
-                style={{ width: 300 }}
-                cover={
+              <div className="card">
+                <Link target="_blank" to={`/${item.id}/instruction`}>
+                  {/* cover={
                   <Link target="_blank" to={`/${item.id}/instruction`}>
                     <img className="imgr" src={`${item.image}`} />
                   </Link>
-                }
-              >
-                {console.log(item.title)}
+                } */}
+                  <Row gutter={{}}>
+                    <Col xs={12} sm={24} className="imageCover">
+                      <img className="cardImage" src={`${item.image}`} />
+                    </Col>
 
-                <Meta
-                  description={
-                    <h1 className="text-lg text-black">{item.title}</h1>
-                  }
-                  title={item.time}
-                />
-
-                {user ? (
-                  <Favourite
-                    id={item.id}
-                    recipe={item.title}
-                    firestoreRecipe={FirestoreResult}
-                    image={item.image}
-                  />
-                ) : (
-                  ''
-                )}
-              </Card>
+                    <Col xs={12} sm={24} className="cardInfo">
+                      <Meta
+                        title={
+                          <>
+                            <h1 className="cardTitle text-lg">{item.title}</h1>
+                            <p className="time">{item.time}</p>
+                            {user ? (
+                              <Favourite
+                                id={item.id}
+                                recipe={item.title}
+                                firestoreRecipe={FirestoreResult}
+                                image={item.image}
+                              />
+                            ) : (
+                              ''
+                            )}
+                          </>
+                        }
+                      />
+                    </Col>
+                  </Row>
+                </Link>
+              </div>
             </>
           )}
         />
+
+        {
+          //HIDE "NEXT" BUTTON IF THE RECIPE RESULTS IS NOT A MULTIPLE OF 20 BECAUSE IT RETURNS 20 AT A TIME AND IF "nexPageLink" BECOMES UNDEFINED WHICH MEANS THE END OF THE RECIPE LIST HAS BEEN REACHED
+          displayItems.length % 20 != 0 ||
+          displayItems.length == 0 ||
+          nextPageError == 'TypeError: item.data._links.next is undefined' ? (
+            <></>
+          ) : (
+            <div className="flex justify-end m-5">
+              <Button
+                type="primary"
+                onClick={() => {
+                  setRecipeData((recipeData) => recipeData.concat(nextPageLink))
+                  setIsNextResultLoaded(false)
+                  console.log(recipeData)
+                }}
+              >
+                Load More
+              </Button>
+            </div>
+          )
+        }
+
+        {isNextResultLoaded == false ? (
+          <div className="loading-spinner">
+            <Spin size="large" tip="Loading..." />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
+
       <Footer />
-    </>
+    </div>
   )
 }
 

@@ -11,8 +11,7 @@ function Foot(id) {
           backgroundColor: '#f59e0b',
         }}
       >
-        {/* Designed By Abdul */}
-        NICE DISHES
+        Designed By Abdul
       </Footer>
     </Layout>
   )

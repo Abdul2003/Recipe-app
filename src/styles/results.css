@@ -9,16 +9,43 @@
   background-attachment: fixed;
   background-position: 68%;
 }
-.ant-card.ant-card-bordered {
+.card {
   margin: 60px auto;
   margin-bottom: 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: 0.5s;
+  width: 280px;
+  background-color: white;
+  border: 1px solid black;
 }
+
+.cardImage {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+.cardTitle {
+  color: black;
+}
+
+.time {
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+.cardTitle,
+.time {
+  margin-top: 20px;
+  width: 270px;
+  white-space: wrap;
+}
+
 .ant-card-meta {
-  height: 20vh;
+  /* ADDING THIS PROPERTY MAKES EACH CARD HAVE THE SAME HEIGHT BUT AT CERTAIN VIEWPORTS IF THE TEXT IS TOO LONG IT WILL OVERFLOW FROM THE CARD VERTICALLY */
+  /* height: 20vh; */
+  padding-left: 10px;
 }
-.ant-card.ant-card-bordered:hover {
+.card:hover {
   /* box-shadow: 5px 5px 5px 5px rgba(255, 0, 0, 0.333); */
   transition: 0.3s;
   transform: translate(-5px, -5px);
@@ -27,27 +54,76 @@
 button.ant-btn.ant-btn-primary.ant-input-search-button:hover {
   color: black;
 }
-.ant-card-cover {
+.imageCover {
   overflow: hidden;
 }
-.ant-card-cover img {
+.imageCover img {
   width: 100%;
   transition: 0.5s all ease-in-out;
 }
 
-.ant-card-cover:hover img {
+.imageCover:hover img {
   transform: scale(1.1);
 }
-.time {
-  font-family: 'Montserrat', sans-serif;
-}
-.ant-card-meta-title {
-  white-space: none;
-}
+
 .anticon.anticon-star {
   color: rgb(255, 174, 0);
-  font-size: 20px;
+  font-size: 23px;
   position: absolute;
   left: 0;
-  bottom: 20px;
+  bottom: 10px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+}
+.hidden-button {
+  display: none;
+}
+@media only screen and (min-width: 576px) and (max-width: 869px) {
+  .card {
+    width: 230px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    width: 100%;
+  }
+  .time {
+    font-size: 13px;
+  }
+  .imageCover img {
+    object-fit: contain;
+  }
+  .cardTitle,
+  .time {
+    width: 220px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .card {
+    width: 90%;
+  }
+
+  .cardImage {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    height: 100%;
+  }
+  .cardInfo {
+    margin: 0;
+    padding-left: 0;
+  }
+  .ant-card-meta {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 20px;
+  }
+  .cardTitle,
+  .time {
+    width: 100%;
+  }
 }
