@@ -231,10 +231,12 @@ function HomeLayout(props) {
         {
           key: '1-1',
           label: (
-            <Radio.Group
-              options={cuisineTypeOptions}
-              onChange={cuisineTypeFilter}
-            />
+            <div onClick={(e) => e.stopPropagation()}>
+              <Radio.Group
+                options={cuisineTypeOptions}
+                onChange={cuisineTypeFilter}
+              />
+            </div>
           ),
         },
       ],
@@ -246,7 +248,11 @@ function HomeLayout(props) {
       children: [
         {
           key: '2-1',
-          label: <Radio.Group options={dietOptions} onChange={dietFilter} />,
+          label: (
+            <div onClick={(e) => e.stopPropagation()}>
+              <Radio.Group options={dietOptions} onChange={dietFilter} />
+            </div>
+          ),
         },
       ],
     },
@@ -258,7 +264,12 @@ function HomeLayout(props) {
         {
           key: '3-1',
           label: (
-            <Radio.Group options={dishTypeOptions} onChange={dishTypeFilter} />
+            <div onClick={(e) => e.stopPropagation()}>
+              <Radio.Group
+                options={dishTypeOptions}
+                onChange={dishTypeFilter}
+              />
+            </div>
           ),
         },
       ],
@@ -412,12 +423,17 @@ function HomeLayout(props) {
                 <Dropdown
                   placement="bottomLeft"
                   menu={{ items: filterDropdown }}
+                  trigger={['click']}
                 >
                   <Button type="text">
                     <FilterOutlined style={{ fontSize: '20px' }} />
                   </Button>
                 </Dropdown>
-                <Dropdown menu={{ items }} placement="bottomLeft">
+                <Dropdown
+                  menu={{ items }}
+                  placement="bottomLeft"
+                  trigger={['click']}
+                >
                   <Button type="text">
                     <UserOutlined style={{ fontSize: '20px' }} />
                   </Button>
