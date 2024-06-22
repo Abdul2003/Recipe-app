@@ -319,7 +319,7 @@ function HomeLayout(props) {
           label: (
             <div
               className="flex justify-center"
-              onClick={(e) => e?.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               <Input
                 value={signInEmail}
@@ -333,7 +333,7 @@ function HomeLayout(props) {
         {
           key: '2',
           label: (
-            <div className="" onClick={(e) => e?.stopPropagation()}>
+            <div className="" onClick={(e) => e.stopPropagation()}>
               <Input
                 className="w-10/12"
                 type={signInPasswordType}
@@ -354,7 +354,7 @@ function HomeLayout(props) {
           label: (
             <div
               className="flex justify-center"
-              onClick={(e) => e?.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               <Button type="primary" onClick={signIn}>
                 Sign In
