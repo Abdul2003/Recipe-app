@@ -11,8 +11,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 function addRecipe(props) {
   firebase.initializeApp(initializeFirebase)
-  const [checkFav, setCheckFav] = useState(false)
-  const [checkFav2, setCheckFav2] = useState(true)
+  const [isLiked, setIsLiked] = useState(false)
+  const [isDisliked, setIsDisliked] = useState(true)
   const [Liked, setLiked] = useState(<StarOutlined />)
   const [disLiked, setdisLiked] = useState(<StarFilled />)
 
@@ -22,12 +22,6 @@ function addRecipe(props) {
   const [messageApi, contextHolder] = message.useMessage()
 
   console.log(user)
-  // useEffect(() => {
-  //   if (props.firestoreRecipe.includes(props.recipe)) {
-  //     setCheckFav(true)
-  //     setLiked(<CheckOutlined />)
-  //   }
-  // }, [])
   const userRef = db.collection('Users').doc(user.email)
 
   const addFavourite = () => {
@@ -57,9 +51,9 @@ function addRecipe(props) {
 
       setLiked(<StarFilled />)
       setdisLiked(<StarFilled />)
-      setCheckFav(true)
-      setCheckFav2(true)
-      messageApi.info('Recipe Added To Favourites!❤️')
+      setIsLiked(true)
+      setIsDisliked(true)
+      messageApi.info('Recipe Added To Favourites!✔️')
     })
     console.log('added')
     console.log(props.firestoreRecipe)
@@ -77,28 +71,29 @@ function addRecipe(props) {
 
     setdisLiked(<StarOutlined />)
     setLiked(<StarOutlined />)
-    setCheckFav(false)
-    setCheckFav2(false)
+
+    setIsDisliked(false)
+    setIsLiked(false)
     messageApi.info('Recipe Removed From Favourites!💔')
   }
 
   function dislikeRecipe(e) {
-    checkFav == false ? addFavourite() : RemoveFavourite()
-    console.log(checkFav)
+    isLiked == false ? addFavourite() : RemoveFavourite()
+    console.log(isLiked)
     e.preventDefault()
   }
 
   function likeRecipe(e) {
-    checkFav2 == false ? addFavourite() : RemoveFavourite()
-    console.log(checkFav)
+    isDisliked == false ? addFavourite() : RemoveFavourite()
+    console.log(isLiked)
     e.preventDefault()
   }
 
-  console.log(props.firestoreRecipe)
+  console.log(props.firestoreRecipeId)
   console.log(props.recipe)
-  console.log(checkFav)
+  console.log(isLiked)
 
-  return props.firestoreRecipe.includes(props.recipe) ? (
+  return props.firestoreRecipeId.includes(props.id) ? (
     <>
       {contextHolder}
       <Button onClick={likeRecipe} type="link">
@@ -107,6 +102,7 @@ function addRecipe(props) {
     </>
   ) : (
     <>
+      {contextHolder}
       <Button onClick={dislikeRecipe} type="link">
         {Liked}
       </Button>

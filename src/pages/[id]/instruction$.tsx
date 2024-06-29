@@ -42,7 +42,7 @@ function RecipePage() {
   const [TextChange, setTextChange] = useState('1')
   const [nutrients, setNutrients] = useState([])
   const [dietaryLabels, setDietaryLabels] = useState([])
-  const [ID, setID] = useState([])
+  const [recipeId, setRecipeId] = useState([])
   const [title, setTitle] = useState('🍽️ Recipe Hub')
   const [FirestoreResult, setFirestoreResult] = useState([])
 
@@ -65,7 +65,7 @@ function RecipePage() {
           setCalories(response.data.recipe.calories)
           setNutrients(response.data.recipe.digest)
           setTitle(`🍽️ ${label}`)
-          setID(response.data.recipe.uri.substr(51))
+          setRecipeId(response.data.recipe.uri.substr(51))
           console.log(response.data.recipe)
         },
         (error) => {
@@ -82,7 +82,7 @@ function RecipePage() {
           const getRecipe = doc.data().Favourites
           console.log(getRecipe)
 
-          setFirestoreResult(getRecipe.map((item) => item.Recipe))
+          setFirestoreResult(getRecipe.map((item) => item.Id))
 
           return getRecipe
         })
@@ -157,9 +157,9 @@ function RecipePage() {
                   <span>
                     {user ? (
                       <Favourite
-                        id={ID}
+                        id={recipeId}
                         recipe={label}
-                        firestoreRecipe={FirestoreResult}
+                        firestoreRecipeId={FirestoreResult}
                         image={image}
                         className={className.favouriteBtn}
                       />

@@ -86,7 +86,7 @@ function resultsPage() {
         getDoc(colRef).then((doc) => {
           const getRecipe = doc.data().Favourites
 
-          setFirestoreResult(getRecipe.map((item) => item.Recipe))
+          setFirestoreResult(getRecipe.map((item) => item.Id))
 
           return getRecipe
         })
@@ -228,7 +228,7 @@ function resultsPage() {
                               <Favourite
                                 id={item.id}
                                 recipe={item.title}
-                                firestoreRecipe={FirestoreResult}
+                                firestoreRecipeId={FirestoreResult}
                                 image={item.image}
                               />
                             ) : (
