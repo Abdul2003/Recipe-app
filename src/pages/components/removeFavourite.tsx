@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { message } from 'antd'
 import { DeleteOutlined, DeleteFilled } from '@ant-design/icons'
 import '../../styles/favourites.css'
 import firebase from 'firebase/compat/app'
@@ -18,8 +19,9 @@ function removeFavourite(props) {
   const [onHover, setOnHover] = useState(<DeleteOutlined />)
   const fireAuth = firebase.auth()
   const db = firebase.firestore()
-
+  const [messageApi, contextHolder] = message.useMessage()
   const removeRecipe = (idx, e) => {
+    e.preventDefault()
     onAuthStateChanged(fireAuth, (user) => {
       const userRef = db.collection('Users').doc(user.email)
       userRef.update({
@@ -33,7 +35,7 @@ function removeFavourite(props) {
     var arrayCopy = [...props.favouriteRecipes]
     arrayCopy.splice(idx, 1) //remove the the item at the specific index
     props.setFavouriteRecipes(arrayCopy)
-    e.preventDefault()
+    messageApi.info('Recipe Removed From Favourites!💔')
   }
 
   const mouseOver = () => {
@@ -43,14 +45,17 @@ function removeFavourite(props) {
     setOnHover(<DeleteOutlined />)
   }
   return (
-    <div
-      onMouseOver={mouseOver}
-      onMouseLeave={mouseLeave}
-      className={'mr-3 sm:mr-20'}
-      onClick={(e) => removeRecipe(props.index, e)}
-    >
-      {onHover}
-    </div>
+    <>
+      {contextHolder}
+      <div
+        onMouseOver={mouseOver}
+        onMouseLeave={mouseLeave}
+        className={'mr-3 sm:mr-20'}
+        onClick={(e) => removeRecipe(props.index, e)}
+      >
+        {onHover}
+      </div>
+    </>
   )
 }
 export default removeFavourite

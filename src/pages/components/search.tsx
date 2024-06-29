@@ -22,9 +22,6 @@ function search(props) {
       ])
       router.push({ search: `q=${value}` })
       props.setLoad(false)
-      props.inputValue(value)
-      // props.search(value)
-      // window.location.reload()
     }
   }
   return (

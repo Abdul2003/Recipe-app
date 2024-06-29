@@ -94,9 +94,8 @@ function resultsPage() {
     }
     fetchData().catch(console.error)
   }, [recipeData])
-  const getTitleValue = (search) => {
-    TabTitle(`🍽️ ${search} Results`)
-  }
+
+  TabTitle(`🍽️ ${params} Results`)
 
   if (error) {
     return (
@@ -113,7 +112,6 @@ function resultsPage() {
           filterDishType={(filter) => setDishTypeFilter(filter)}
           input={(search) => setRecipeData(search)}
           isLoaded={(loadState) => setIsLoaded(loadState)}
-          title={getTitleValue}
         />
         <Loading />
       </>
@@ -148,7 +146,6 @@ function resultsPage() {
           filterDishType={(filter) => setDishTypeFilter(filter)}
           input={(search) => setRecipeData(search)}
           isLoaded={(loadState) => setIsLoaded(loadState)}
-          title={getTitleValue}
         />
         <div
           className="background"
@@ -186,7 +183,6 @@ function resultsPage() {
         filterDishType={(filter) => setDishTypeFilter(filter)}
         input={(search) => setRecipeData(search)}
         isLoaded={(loadState) => setIsLoaded(loadState)}
-        title={getTitleValue}
       />
 
       <div

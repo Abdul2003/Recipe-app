@@ -409,11 +409,7 @@ function HomeLayout(props) {
         </Col>
 
         <Col xs={9} sm={8}>
-          <Search
-            inputValue={props.title}
-            search={props.input}
-            setLoad={props.isLoaded}
-          />
+          <Search search={props.input} setLoad={props.isLoaded} />
         </Col>
 
         <Col xs={5} sm={8}>

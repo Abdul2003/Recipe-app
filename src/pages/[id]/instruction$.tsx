@@ -43,7 +43,6 @@ function RecipePage() {
   const [nutrients, setNutrients] = useState([])
   const [dietaryLabels, setDietaryLabels] = useState([])
   const [recipeId, setRecipeId] = useState([])
-  const [title, setTitle] = useState('🍽️ Recipe Hub')
   const [FirestoreResult, setFirestoreResult] = useState([])
 
   useEffect(() => {
@@ -64,7 +63,7 @@ function RecipePage() {
           setDietaryLabels(response.data.recipe.healthLabels)
           setCalories(response.data.recipe.calories)
           setNutrients(response.data.recipe.digest)
-          setTitle(`🍽️ ${label}`)
+          TabTitle(`🍽️ ${response.data.recipe.label}`)
           setRecipeId(response.data.recipe.uri.substr(51))
           console.log(response.data.recipe)
         },
@@ -89,7 +88,7 @@ function RecipePage() {
       })
     }
     fetchData().catch(console.error)
-  }, [title])
+  }, [])
   console.log(window.innerWidth)
   if (error) {
     TabTitle(`🍽️ Recipe Hub`)
@@ -124,8 +123,6 @@ function RecipePage() {
   const router = useHistory()
   const onSearch = (value) =>
     router.push({ search: `q=${value}`, pathname: `/:id/results` })
-
-  TabTitle(title)
 
   const handleTextChange = (e) => {
     setTextChange(e.target.value)
