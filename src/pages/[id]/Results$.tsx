@@ -48,7 +48,7 @@ function resultsPage() {
   const [nextPageError, setnextPageError] = useState()
 
   const [route, setRoute] = useState()
-
+  TabTitle(`🍽️ ${params} Results`)
   useEffect(() => {
     axios
       .all(recipeData.map((endpoint) => axios.get(endpoint)))
@@ -94,8 +94,6 @@ function resultsPage() {
     }
     fetchData().catch(console.error)
   }, [recipeData])
-
-  TabTitle(`🍽️ ${params} Results`)
 
   if (error) {
     return (

@@ -32,7 +32,7 @@ function favourites() {
   const db = firebase.firestore()
   const auth = getAuth()
   const [user] = useAuthState(fireAuth as any)
-
+  TabTitle('🍽️ Favourites')
   useEffect(() => {
     const fetchData = async () => {
       onAuthStateChanged(auth, (user) => {
@@ -56,7 +56,6 @@ function favourites() {
   const router = useHistory()
   const onSearch = (value) =>
     router.push({ search: `q=${value}`, pathname: `/:id/results` })
-  TabTitle('🍽️ Favourites')
 
   return (
     <>
